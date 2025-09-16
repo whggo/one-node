@@ -24,11 +24,12 @@
         ]
       },
       "streamSettings": {
-        "network": "xhttp",
-        "xhttpSettings": {
-          "host": "",
-          "mode": "auto",
+        "network": "ws",
+        "wsSettings": {
           "path": "/"
+          "headers": {
+          "Host": ""
+          }
         }
       },
       "sniffing": {
