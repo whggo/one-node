@@ -4,12 +4,11 @@ on:
   push:
     branches: [ main ]
     tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ main ]
 
 env:
   REGISTRY: docker.io
-  IMAGE_NAME: one  # 修改镜像名称为one
+  # 使用你的Docker Hub用户名作为命名空间
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/one
 
 jobs:
   build-and-push:
@@ -21,14 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Debug file structure
-        run: |
-          echo "Current working directory: $(pwd)"
-          echo "Directory contents:"
-          ls -la
-          echo "Hugging-face contents:"
-          ls -la hugging-face/ || echo "hugging-face directory not found"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -43,7 +34,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}  # 使用新的镜像名称
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=latest
+            type=sha
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
