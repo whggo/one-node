@@ -11,18 +11,19 @@
         "decryption": "none",
         "clients": [
           {
-            "email": "idx-xhttp",
+            "email": "idx-ws",
             "flow": "",
             "id": "$UUID"
           }
         ]
       },
       "streamSettings": {
-        "network": "xhttp",
-        "xhttpSettings": {
-          "host": "",
-          "mode": "auto",
-          "path": "/"
+        "network": "ws",
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+          "Host": ""
+          }
         }
       }
     }
